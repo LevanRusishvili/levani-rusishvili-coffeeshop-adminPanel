@@ -1,0 +1,56 @@
+/* Navbar container */
+.navbar {
+  width: 250px;
+  height: 100vh;
+  background-color: #1f1f1f;
+  color: white;
+  position: fixed; /* Keeps navbar fixed */
+  left: 0;
+  top: 0;
+  padding: 1rem;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+  z-index: 1000; /* Ensures navbar stays above other content */
+}
+
+/* Navbar header styles */
+.navbar-header {
+  padding: 1rem 0;
+  border-bottom: 1px solid #444;
+  margin-bottom: 1rem;
+}
+
+.navbar-header h1 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.navbar-header p {
+  margin: 0.25rem 0 0;
+  font-size: 0.875rem;
+  color: #bbb;
+}
+
+/* Navbar menu links */
+.navbar-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.nav-link {
+  color: #ccc;
+  text-decoration: none;
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+  background-color: #333;
+  color: white;
+}
+
+.nav-link.active {
+  background-color: #7a4f3d; /* Your primary color */
+  color: white;
+}

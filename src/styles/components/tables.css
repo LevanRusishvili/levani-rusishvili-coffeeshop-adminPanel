@@ -1,0 +1,25 @@
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  
+  .data-table th {
+    background-color: #7a4f3d;
+    color: white;
+    padding: 12px 15px;
+    text-align: left;
+  }
+  
+  .data-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .data-table tr:hover {
+    background-color: #f9f5f2;
+  }
+  
+  .actions-cell {
+    white-space: nowrap;
+  }
