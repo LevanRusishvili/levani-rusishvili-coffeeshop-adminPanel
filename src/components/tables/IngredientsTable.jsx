@@ -3,7 +3,8 @@ import { CoffeeContext } from "../../context/CoffeeContext";
 import Button from "../common/Button";
 import "../../styles/components/tables.css";
 
-const IngredientsTable = () => {
+const IngredientsTable = ({ onEdit, editingId }) => {
+  // Add props here
   const { ingredients, deleteIngredient } = useContext(CoffeeContext);
 
   const handleDelete = (id) => {
@@ -27,13 +28,22 @@ const IngredientsTable = () => {
         </thead>
         <tbody>
           {ingredients.map((ingredient) => (
-            <tr key={ingredient.id}>
+            <tr
+              key={ingredient.id}
+              className={editingId === ingredient.id ? "table-row-editing" : ""}
+            >
               <td>{ingredient.id}</td>
               <td>{ingredient.name}</td>
               <td>${ingredient.price.toFixed(2)}</td>
               <td>{ingredient.strength}</td>
               <td>{ingredient.flavor}</td>
               <td className="actions-cell">
+                <Button
+                  variant="secondary"
+                  onClick={() => onEdit(ingredient.id)} // Use the onEdit prop
+                >
+                  Edit
+                </Button>
                 <Button
                   variant="danger"
                   onClick={() => handleDelete(ingredient.id)}

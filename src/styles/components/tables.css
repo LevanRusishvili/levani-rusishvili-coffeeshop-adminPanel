@@ -23,3 +23,13 @@
   .actions-cell {
     white-space: nowrap;
   }
+
+  .coffee-image {
+    width: 400px;
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    box-shadow: gray 2px 2px 6px;
+  }
+
+  

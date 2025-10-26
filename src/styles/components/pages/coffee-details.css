@@ -1,0 +1,146 @@
+/* Coffee Details Page Styles */
+.coffee-details-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.details-section {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.details-section h2 {
+  margin-bottom: 15px;
+  color: #333;
+  border-bottom: 2px solid #8B4513;
+  padding-bottom: 8px;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.detail-item strong {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.detail-item span {
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.description-section {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.description-section h2 {
+  margin-bottom: 15px;
+  color: #333;
+  border-bottom: 2px solid #8B4513;
+  padding-bottom: 8px;
+}
+
+.description-section p {
+  line-height: 1.6;
+  color: #555;
+}
+
+.ingredients-section {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.ingredients-section h2 {
+  margin-bottom: 15px;
+  color: #333;
+  border-bottom: 2px solid #8B4513;
+  padding-bottom: 8px;
+}
+
+.ingredients-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.ingredient-card {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 6px;
+  border-left: 4px solid #8B4513;
+}
+
+.ingredient-card h3 {
+  margin: 0 0 10px 0;
+  color: #333;
+}
+
+.ingredient-properties {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.property {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.property strong {
+  color: #333;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.error-state {
+  text-align: center;
+  padding: 40px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.error-state h2 {
+  color: #dc3545;
+  margin-bottom: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .details-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+  }
+  
+  .coffee-details-content {
+    padding: 10px;
+  }
+}

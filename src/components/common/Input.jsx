@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import "../../styles/components/forms.css";  // Change "../" to "../../"
+import "../../styles/components/forms.css";  
 
 const Input = ({
   label,

@@ -1,23 +1,26 @@
 import { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { CoffeeContext } from "../context/CoffeeContext";
 import Button from "../components/common/Button";
 import Input from "../components/common/Input";
 import "../styles/components/pages/add-coffee.css";
 import "../styles/components/forms.css";
 
-const AddCoffee = () => {
-  const { addCoffee, ingredients } = useContext(CoffeeContext);
+const EditCoffee = () => {
+  const { updateCoffee, ingredients } = useContext(CoffeeContext);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const coffeeToEdit = location.state?.coffee;
 
   const [formData, setFormData] = useState({
-    name: "",
-    origin: "",
-    caffeine: "",
-    price: "",
-    imageUrl: "",
-    description: "",
-    ingredients: [],
+    name: coffeeToEdit?.name || "",
+    origin: coffeeToEdit?.origin || "",
+    caffeine: coffeeToEdit?.caffeine || "",
+    price: coffeeToEdit?.price || "",
+    imageUrl: coffeeToEdit?.imageUrl || "",
+    description: coffeeToEdit?.description || "",
+    ingredients: coffeeToEdit?.ingredients || [],
   });
 
   const [errors, setErrors] = useState({});
@@ -40,11 +43,14 @@ const AddCoffee = () => {
       return;
     }
 
-    addCoffee({
-      ...formData,
-      price: parseFloat(formData.price),
-      ingredients: formData.ingredients,
-    });
+    if (coffeeToEdit) {
+      updateCoffee(coffeeToEdit.id, {
+        ...formData,
+        price: parseFloat(formData.price),
+        ingredients: formData.ingredients,
+      });
+    }
+
     navigate("/dashboard");
   };
 
@@ -63,7 +69,7 @@ const AddCoffee = () => {
   return (
     <div className="page-container">
       <div className="page-header">
-        <h1>Add New Coffee</h1>
+        <h1>{coffeeToEdit ? "Edit Coffee" : "Add New Coffee"}</h1>
         <Button variant="secondary" onClick={() => navigate("/dashboard")}>
           Back to Dashboard
         </Button>
@@ -167,7 +173,7 @@ const AddCoffee = () => {
 
         <div className="form-actions">
           <Button type="submit" variant="primary">
-            Save Coffee
+            {coffeeToEdit ? "Update Coffee" : "Save Coffee"}
           </Button>
         </div>
       </form>
@@ -175,4 +181,4 @@ const AddCoffee = () => {
   );
 };
 
-export default AddCoffee;
+export default EditCoffee;

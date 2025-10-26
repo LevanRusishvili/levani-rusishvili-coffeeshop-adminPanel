@@ -7,22 +7,30 @@ import IngredientsTable from "../components/tables/IngredientsTable";
 import "../styles/components/pages/ingredients.css";
 import "../styles/components/forms.css";
 import "../styles/components/tables.css";
+
 const Ingredients = () => {
-  const { addIngredient } = useContext(CoffeeContext);
+  const { addIngredient, handleEditIngredient, ingredients } =
+    useContext(CoffeeContext);
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     name: "",
     price: "",
+    description: "",
     strength: "Medium",
     flavor: "",
   });
 
+  const [editingId, setEditingId] = useState(null);
   const [errors, setErrors] = useState({});
 
+  //------------------------for-form-submit----------------------------------------------------------
   const validate = () => {
+    //for errors
     const newErrors = {};
     if (!formData.name.trim()) newErrors.name = "Name is required";
+    if (!formData.description.trim())
+      newErrors.description = "Description is required";
     if (!formData.price || isNaN(formData.price))
       newErrors.price = "Valid price is required";
     return newErrors;
@@ -30,28 +38,68 @@ const Ingredients = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const validationErrors = validate();
+    const validationErrors = validate(); //if errors, stop here
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
     }
 
-    addIngredient({
-      ...formData,
-      price: parseFloat(formData.price),
-    });
+    if (editingId) {
+      // Update existing ingredient
+      handleEditIngredient(editingId, {
+        ...formData,
+        price: parseFloat(formData.price),
+      });
+      setEditingId(null); // Exit edit mode
+    } else {
+      // Add new ingredient
+      addIngredient({
+        ...formData,
+        price: parseFloat(formData.price),
+      });
+    }
+
+    // Reset form after new ingredient gets added to the list
     setFormData({
       name: "",
       price: "",
+      description: "",
       strength: "Medium",
       flavor: "",
     });
   };
-
+  //----------------------------------------------------------------------------------
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
     if (errors[name]) setErrors((prev) => ({ ...prev, [name]: "" }));
+  };
+
+  // Add this function - handles edit button click
+  const handleEdit = (id) => {
+    const ingredientToEdit = ingredients.find((ing) => ing.id === id);
+    if (ingredientToEdit) {
+      setFormData({
+        name: ingredientToEdit.name,
+        price: ingredientToEdit.price.toString(),
+        strength: ingredientToEdit.strength,
+        description: ingredientToEdit.description,
+        flavor: ingredientToEdit.flavor,
+      });
+      setEditingId(id);
+    }
+  };
+
+  // Add this function - cancel edit mode
+  const handleCancelEdit = () => {
+    setEditingId(null);
+    setFormData({
+      name: "",
+      price: "",
+      description: "",
+      strength: "Medium",
+      flavor: "",
+    });
   };
 
   return (
@@ -63,9 +111,12 @@ const Ingredients = () => {
         </Button>
       </div>
 
-      <div className="ingredients-container">
-        <div className="ingredients-form">
-          <h2>Add New Ingredient</h2>
+      <div className="ingredients-container split-layout">
+        <div className={`ingredients-form ${editingId ? "editing" : ""}`}>
+          <h2>
+            {editingId ? "Edit Ingredient" : "Add New Ingredient"}
+            {editingId && <span className="edit-indicator">Editing Mode</span>}
+          </h2>
           <form onSubmit={handleSubmit} className="form-container">
             <div className="form-row">
               <Input
@@ -86,6 +137,16 @@ const Ingredients = () => {
                 value={formData.price}
                 onChange={handleChange}
                 error={errors.price}
+                required
+              />
+
+              <Input
+                label="Description"
+                name="description"
+                type="string"
+                value={formData.description}
+                onChange={handleChange}
+                error={errors.description}
                 required
               />
             </div>
@@ -119,14 +180,23 @@ const Ingredients = () => {
 
             <div className="form-actions">
               <Button type="submit" variant="primary">
-                Add Ingredient
+                {editingId ? "Update Ingredient" : "Add Ingredient"}
               </Button>
+              {editingId && (
+                <Button
+                  type="button"
+                  variant="secondary"
+                  onClick={handleCancelEdit}
+                >
+                  Cancel Edit
+                </Button>
+              )}
             </div>
           </form>
         </div>
 
         <div className="ingredients-list">
-          <IngredientsTable />
+          <IngredientsTable onEdit={handleEdit} editingId={editingId} />
         </div>
       </div>
     </div>

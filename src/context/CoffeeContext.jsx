@@ -6,8 +6,9 @@ export const CoffeeProvider = ({ children }) => {
   const [ingredients, setIngredients] = useState([
     {
       id: "Ing_scmppl1",
-      name: "Arobica Beans",
+      name: "Arabica Beans",
       price: 15.99,
+      description: "High-quality Arabica beans with a smooth flavor.",
       strength: "Medium",
       flavor: "Fruity",
     },
@@ -15,6 +16,7 @@ export const CoffeeProvider = ({ children }) => {
       id: "Ing_scmppl2",
       name: "Robusta Beans",
       price: 12.99,
+      description: "Strong Robusta beans with a bold taste.",
       strength: "High",
       flavor: "Earthy",
     },
@@ -22,6 +24,7 @@ export const CoffeeProvider = ({ children }) => {
       id: "Ing_scmppl3",
       name: "Vanilla Syrup",
       price: 8.99,
+      description: "Sweet vanilla syrup to enhance your coffee.",
       strength: "Low",
       flavor: "Sweet",
     },
@@ -34,6 +37,8 @@ export const CoffeeProvider = ({ children }) => {
       origin: "Ethiopia",
       caffeine: "100mg",
       price: 4.99,
+      imageUrl:
+        "https://images.unsplash.com/photo-1587734195503-904fca47e0e9?w=400&h=300&fit=crop",
       description:
         "A light roasted coffee with bright acidity, and complex fruit and floral notes...",
       ingredients: ["Ing_scmppl1"],
@@ -44,11 +49,24 @@ export const CoffeeProvider = ({ children }) => {
       origin: "Colombia",
       caffeine: "140mg",
       price: 5.49,
+      imageUrl:
+        "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=400&h=300&fit=crop",
       description:
         "Medium roast with a sweet and rich caramel flavor, balanced acidity and a clean finish...",
-      ingredients: ["Ing_scmppl2"],
+      ingredients: ["Ing_scmppl2", "Ing_scmppl3"],
     },
   ]);
+
+
+   const handleEditIngredient = useCallback((id, updatedIngredient) => {
+    setIngredients((prev) =>
+      prev.map((ingredient) => {
+        return ingredient.id === id
+          ? { ...ingredient, ...updatedIngredient }
+          : ingredient; 
+      })
+    );
+  }, []);
 
   const addIngredient = useCallback((ingredient) => {
     setIngredients((prev) => [
@@ -111,6 +129,7 @@ export const CoffeeProvider = ({ children }) => {
         deleteCoffee,
         deleteIngredient,
         computeTotalPrice,
+        handleEditIngredient,
       }}
     >
       {children}
